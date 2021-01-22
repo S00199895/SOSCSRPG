@@ -24,6 +24,8 @@ namespace Engine.ViewModels
                 OnPropertyChanged(nameof(HasLocationToEast));
                 OnPropertyChanged(nameof(HasLocationToWest));
                 OnPropertyChanged(nameof(HasLocationToSouth));
+
+                GivePlayerQuestsAtLocation();
             }
         }
         public bool HasLocationToNorth
@@ -102,5 +104,16 @@ namespace Engine.ViewModels
             }
 
         }
+
+        private void GivePlayerQuestsAtLocation()
+		{
+            foreach (Quest quest in CurrentLocation.QuestsAvaialbleHere)
+			{
+                if (!CurrentPlayer.Quests.Any(q => q.PlayerQuest.ID == quest.ID))
+				{
+                    CurrentPlayer.Quests.Add(new QuestStatus(quest));
+				}
+			}
+		}
     }
 }
